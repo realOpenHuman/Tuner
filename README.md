@@ -1,25 +1,26 @@
-```markdown
-# Audio Tuner (音频调谐器)
+# Audio Tuner
 
-A real‑time instrument tuning tool that detects musical frequencies through your microphone.
+A real-time instrument tuning tool that analyzes audio from your microphone and displays the most prominent musical notes and their intensities.
 
 ## Overview
 
-Audio Tuner captures environmental sounds via microphone, performs FFT analysis, and identifies the strongest frequency components. It maps each frequency to the nearest musical note (e.g., A4 = 440 Hz) and displays the relative intensity of the top 7 components. A built‑in noise gate suppresses low‑level background noise, providing a clean, continuously updating display ideal for tuning musical instruments.
+Audio Tuner captures live audio, performs FFT analysis, and identifies the strongest frequency components. It then maps those frequencies to the nearest musical notes (e.g., A4 = 440 Hz) and visualizes the relative strength of the top 7 components. A built-in noise gate prevents jittery output in quiet environments, making it ideal for tuning guitars, pianos, or any acoustic instrument.
 
 ## Features
 
-- 🎤 **Real‑time analysis**: Capture audio from the default microphone and analyse frequency content on the fly.
-- 🎯 **Multi‑frequency detection**: Show the 7 most prominent frequencies with their corresponding note names and octaves.
-- 📊 **Intensity visualisation**: Display each frequency’s relative strength as a percentage bar.
-- 🔇 **Noise gate**: Automatically ignore audio input when the overall level is below 60 % (RMS‑based), reducing flickering in quiet environments.
-- 🖥️ **Clean interface**: Clears the terminal on each update for a smooth, readable visualisation.
+- 🎤 **Real‑time audio analysis** – reads from the default microphone and updates continuously  
+- 🎯 **Multi‑frequency detection** – shows the 7 most dominant frequencies, each labelled with its note name and octave  
+- 📊 **Intensity visualization** – displays each frequency’s strength as a percentage bar  
+- 🔇 **Noise gate** – automatically suppresses faint background noise (threshold: 60 % RMS intensity)  
+- 🖥️ **Clean, live interface** – clears the terminal on every update for a smooth, flicker‑free display  
 
 ## Tech Stack
 
-- **Language**: Python 3.6+
-- **Core libraries**: PyAudio (PortAudio binding), NumPy
-- **Signal processing**: FFT with a Hamming window, RMS intensity measurement
+| Technology | Purpose |
+|------------|---------|
+| Python 3.6+ | Core language |
+| PyAudio | Microphone input (PortAudio wrapper) |
+| NumPy | FFT, windowing, and numerical processing |
 
 ## Project Structure
 
@@ -34,7 +35,7 @@ Audio Tuner captures environmental sounds via microphone, performs FFT analysis,
 ### Prerequisites
 
 - Python 3.6 or higher
-- PortAudio development libraries (required by PyAudio on Linux)
+- PortAudio development libraries (required by PyAudio on Linux; macOS and Windows users usually get them automatically with the `pyaudio` package)
 - A working microphone
 
 ### Installation
@@ -44,36 +45,35 @@ Audio Tuner captures environmental sounds via microphone, performs FFT analysis,
    pip install pyaudio numpy
    ```
 
-2. **Linux users – install PortAudio**
+2. **Linux users: install PortAudio**
    ```bash
    sudo apt-get install portaudio19-dev
    ```
-   macOS and Windows users typically get the required libraries automatically with the `pyaudio` pip package.
 
 ### Configuration
 
-No configuration file or environment variables are needed. The script uses the default system microphone and internal parameters optimised for musical tuning:
+No configuration files or environment variables are needed. The script uses the following internal parameters, tuned for musical instrument detection:
 
-| Parameter         | Value       |
-|-------------------|-------------|
-| Sample rate       | 44 100 Hz   |
-| Chunk size        | 32 768 samples |
+| Parameter          | Value                |
+|--------------------|----------------------|
+| Sample rate        | 44 100 Hz           |
+| Chunk size         | 32 768 samples       |
 | Noise gate threshold | 60 % RMS intensity |
-| Frequency range   | 20 Hz – 20 000 Hz |
+| Frequency range    | 20 Hz – 20 000 Hz    |
 
 ### Running the Project
 
-Start the tuner from the terminal:
+From the terminal, start the tuner:
 
 ```bash
 python Tuner.py
 ```
 
-The application will begin listening immediately. Press `Ctrl+C` to stop.
+The application begins monitoring immediately. Press `Ctrl+C` to exit.
 
 ## Usage
 
-Once running, you will see a live view of the top 7 frequencies and their strengths, for example:
+When the tuner is running, you will see a live view similar to:
 
 ```
 频率 1:   440 Hz (A4) | 相对强度:  98%
@@ -81,30 +81,29 @@ Once running, you will see a live view of the top 7 frequencies and their streng
 ...
 ```
 
-- When the environment is quiet (below the noise gate), the output will pause and show the last valid detection.
-- The display clears and refreshes in place, giving a stable view even on standard terminals.
+- In a quiet environment (below the noise gate), the last valid detection is displayed with a “quiet environment” notice.
+- The output clears and refreshes in place, providing a stable view even on standard terminals.
 
-Use this while tuning an instrument: play a note and observe the detected fundamental and overtones.
+While tuning an instrument, play a single note and observe the detected fundamental and overtones.
 
 ## Testing
 
-This repository does not include automated tests at this time.  
-To manually verify behaviour, run the script and check that frequencies from a known source (e.g., a tuning fork at 440 Hz) are correctly identified.
+This repository does not currently include automated tests.  
+To manually verify functionality, run the script and check whether a known frequency source (e.g., a 440 Hz tuning fork) is correctly identified.
 
 ## Contributing
 
 Contributions, bug reports, and feature requests are welcome.  
 
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/your-idea`).
-3. Commit your changes.
-4. Push to the branch.
-5. Open a pull request.
+1. Fork the repository  
+2. Create a feature branch (`git checkout -b feature/your-idea`)  
+3. Commit your changes  
+4. Push the branch  
+5. Open a pull request  
 
-Please follow common Python coding conventions and test your changes before submitting.
+Please follow common Python coding conventions and test your changes locally before submitting.
 
 ## License
 
 License information was not found in this repository.  
 If you are the author, consider adding a `LICENSE` file to clarify usage terms.
-```
